@@ -10,6 +10,23 @@ that slice: multi-source review ingestion → duplicate detection → trust
 labeling, with duplicates **flagged, never deleted** (the duplication pattern
 is itself a trust signal).
 
+## Where the live product is today (checked during the build)
+
+gangnambeautyguide.com already ingests, translates and summarizes ~90 reviews
+from a **single source** (GangnamUnni) on `/en/reviews`. This demo is the stage
+that becomes necessary the moment syndication goes **multi-source** (cafes,
+blogs, forums): cross-source de-duplication and seeding detection. Two
+observations from the live site that shaped this demo:
+
+- Reviews are stored as third-person English **summaries**. Dedup must
+  therefore run on the source-language originals *before* summarization:
+  summarizing two different reviews with the same model converges their
+  wording (false merges), while a paraphrased shill pair can diverge
+  (missed merges). Pipeline order matters: dedup → then translate/summarize.
+- Clinic pages (e.g. `/en/clinics/da-ps`) emit `aggregateRating` schema
+  (4.7, 13,396 reviews) but render none of the site's own translated reviews
+  — the review→clinic join this pipeline's entity keys would power.
+
 ## Architecture
 
 ```

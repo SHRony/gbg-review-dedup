@@ -79,7 +79,11 @@
   <p class="sub">A working miniature of Gangnam Beauty Guide's review-syndication pipeline:
   reviews ingested from multiple Korean sources, duplicate candidates detected with cheap
   language-agnostic math, ambiguous cases resolved by an LLM judge — and every duplicate
-  <b>flagged, never deleted</b>, because the duplication pattern is itself a trust signal.</p>
+  <b>flagged, never deleted</b>, because the duplication pattern is itself a trust signal.
+  The live site already translates single-source (GangnamUnni) reviews into English summaries;
+  this is the stage that unlocks <b>multi-source</b> syndication — and it must run on
+  source-language originals <i>before</i> summarization, which destroys the textual evidence
+  dedup relies on.</p>
   <div class="notice"><b>Fixture data.</b> All 20 reviews, clinics, doctors and handles below are
   fictional, modeled on real Korean source formats (Naver cafes, blogs, clinic testimonials).
   No real clinic is named — you can't demo "suspected seeding" labels on real businesses.
