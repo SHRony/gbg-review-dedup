@@ -202,12 +202,24 @@ const LABEL_HTML = {
 function render(){
   const th = parseFloat($("th").value), judgeOn = $("judgeOn").checked;
   $("thval").textContent = th.toFixed(2);
+  const stage1 = cluster(th, false);
   const { clusters, pairState } = cluster(th, judgeOn);
 
-  $("clusterSummary").textContent =
-    `${DATA.reviews.length} reviews → ${clusters.length} duplicate cluster(s) at threshold ${th.toFixed(2)}` +
-    (judgeOn ? " with LLM judge on" : " (stage 1 only)") +
-    `. ${DATA.reviews.length - clusters.reduce((s,c)=>s+c.length,0)} reviews are unique.`;
+  if (judgeOn){
+    const vetoed = Object.values(pairState).filter(s => s === "vetoed").length;
+    const added = DATA.pairs.filter(p => pairState[p.a+"-"+p.b] === "judge-merged" && p.jaccard < th).length;
+    $("clusterSummary").innerHTML =
+      `${DATA.reviews.length} reviews · at threshold ${th.toFixed(2)}, stage 1 alone would give ` +
+      `<b>${stage1.clusters.length}</b> cluster(s) — the LLM judge corrects that to <b>${clusters.length}</b>` +
+      (vetoed ? `, vetoing ${vetoed} false merge(s)` : "") +
+      (added ? `, adding ${added} merge(s) n-grams missed` : "") +
+      `. The final clustering staying stable while you drag is stage 2 absorbing the threshold sensitivity — ` +
+      `toggle the judge off to see raw stage-1 behavior.`;
+  } else {
+    $("clusterSummary").textContent =
+      `${DATA.reviews.length} reviews → ${clusters.length} duplicate cluster(s) at threshold ${th.toFixed(2)} ` +
+      `(stage 1 only). ${DATA.reviews.length - clusters.reduce((s,c)=>s+c.length,0)} reviews are unique.`;
+  }
 
   $("clusters").innerHTML = clusters.length ? clusters.map(ids => {
     const rs = ids.map(id => byId[id]).sort((a,b) => a.date < b.date ? -1 : 1);
