@@ -1,0 +1,34 @@
+[
+  {
+    "a": "r03",
+    "b": "r04",
+    "relation": "paraphrase-seeding",
+    "confidence": 0.93,
+    "rationale": "B reuses A's sentence skeleton nearly verbatim with systematic light edits (해주셨어요→해주셨습니다, 난리예요→다들 …하네요) and the price shifted 350만원→330만원, posted 4 days apart under different handles on different platforms. The edit pattern is copy-and-tweak seeding, not independent authorship.",
+    "generated_via": "claude-interactive (same prompt as judge.py; no API key on build machine)"
+  },
+  {
+    "a": "r08",
+    "b": "r17",
+    "relation": "distinct",
+    "confidence": 0.97,
+    "rationale": "The 0.30 similarity is English character-bigram baseline: the reviews describe different clinics (Grace vs Misoline), different procedures (contouring vs double eyelid), and share no specific claims. Unrelated reviews.",
+    "generated_via": "claude-interactive (same prompt as judge.py; no API key on build machine)"
+  },
+  {
+    "a": "r05",
+    "b": "r06",
+    "relation": "coincidental-similarity",
+    "confidence": 0.88,
+    "rationale": "Shared wording is generic K-beauty review phrasing (붓기, 라인 자연스러워요, 만족); the accounts describe different surgical methods (자연유착 vs 절개), different prices (150 vs 200만원) and different recovery courses. Independent patients at the same clinic.",
+    "generated_via": "claude-interactive (same prompt as judge.py; no API key on build machine)"
+  },
+  {
+    "a": "r07",
+    "b": "r08",
+    "relation": "cross-language-duplicate",
+    "confidence": 0.95,
+    "rationale": "B is a sentence-by-sentence English translation of A (CT-scan explanation, ₩5.5M including swelling-care program, V-line visible after a month), posted 3 days later by a different handle on a Western-facing forum — consistent with agency syndication of one underlying experience.",
+    "generated_via": "claude-interactive (same prompt as judge.py; no API key on build machine)"
+  }
+]

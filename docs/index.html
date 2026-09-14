@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Review Dedup Demo — Gangnam Beauty Guide</title>
+<style>
+  :root{
+    --bg:#faf8f6; --card:#ffffff; --ink:#26211f; --muted:#7a6f6a; --line:#eadfd9;
+    --accent:#b5485d; --accent-soft:#f7e6ea;
+    --blue:#2b6cb0; --blue-soft:#e3edf8;
+    --red:#c0392b; --red-soft:#fbe7e4;
+    --purple:#6b46c1; --purple-soft:#eee6fb;
+    --orange:#b7791f; --orange-soft:#fbf0dc;
+    --green:#2f855a; --green-soft:#e2f2e9;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+  .wrap{max-width:1000px;margin:0 auto;padding:28px 18px 60px}
+  header h1{font-size:26px;margin:0 0 6px}
+  header .sub{color:var(--muted);max-width:70ch}
+  .notice{background:var(--accent-soft);border:1px solid #ecc7d0;border-radius:10px;
+    padding:10px 14px;margin:16px 0;font-size:13.5px}
+  .notice b{color:var(--accent)}
+  a{color:var(--accent)}
+  .stages{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:20px 0}
+  .stage{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+  .stage .n{display:inline-block;background:var(--ink);color:#fff;border-radius:50%;
+    width:22px;height:22px;text-align:center;line-height:22px;font-size:12px;margin-right:6px}
+  .stage h3{margin:0 0 6px;font-size:14.5px}
+  .stage p{margin:0;font-size:13px;color:var(--muted)}
+  .controls{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:14px 16px;margin:22px 0;display:flex;flex-wrap:wrap;gap:18px;align-items:center}
+  .controls label{font-weight:600;font-size:14px}
+  .controls input[type=range]{width:220px;accent-color:var(--accent)}
+  .thval{font-variant-numeric:tabular-nums;font-weight:700;color:var(--accent);width:44px;display:inline-block}
+  .controls .hint{flex-basis:100%;font-size:12.5px;color:var(--muted);margin-top:-4px}
+  .switch{display:flex;align-items:center;gap:8px;cursor:pointer}
+  h2{font-size:19px;margin:34px 0 4px}
+  .h2sub{color:var(--muted);font-size:13.5px;margin:0 0 14px}
+  .cluster{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);
+    border-radius:12px;padding:14px 16px;margin:0 0 14px}
+  .cluster .headline{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:8px}
+  .badge{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:999px;white-space:nowrap}
+  .b-crosspost{background:var(--blue-soft);color:var(--blue)}
+  .b-seeding{background:var(--red-soft);color:var(--red)}
+  .b-xlang{background:var(--purple-soft);color:var(--purple)}
+  .b-promoter{background:var(--orange-soft);color:var(--orange)}
+  .b-places{background:var(--green-soft);color:var(--green)}
+  .b-judge{background:#111;color:#ffd76d}
+  .b-src{background:#f1ece8;color:var(--muted);font-weight:600}
+  .review{border-top:1px dashed var(--line);padding:10px 0 4px;margin-top:8px}
+  .review .meta{font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+  .review .kr{margin:6px 0 2px;white-space:pre-wrap}
+  .review .gloss{font-size:13px;color:var(--muted);font-style:italic}
+  .canon{font-size:11.5px;color:var(--green);font-weight:700;letter-spacing:.02em}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+  .mini{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:13.5px}
+  .mini .kr{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .pair{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:10px}
+  .pair .row{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}
+  .bar{height:8px;border-radius:4px;background:#efe8e3;width:160px;overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--accent)}
+  .verdict{margin-top:8px;font-size:13px;background:#faf5ef;border:1px solid #efe3d2;border-radius:8px;padding:8px 12px}
+  .verdict .r{color:var(--muted)}
+  .state{font-size:12px;font-weight:700}
+  .s-merge{color:var(--red)} .s-sep{color:var(--green)} .s-veto{color:var(--purple)}
+  details summary{cursor:pointer;color:var(--accent);font-size:13px}
+  footer{margin-top:44px;border-top:1px solid var(--line);padding-top:18px;font-size:13px;color:var(--muted)}
+  footer h3{font-size:13.5px;color:var(--ink);margin:14px 0 4px}
+  code{background:#f1ece8;border-radius:4px;padding:1px 5px;font-size:12.5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Review De-duplication &amp; Trust Clustering</h1>
+  <p class="sub">A working miniature of Gangnam Beauty Guide's review-syndication pipeline:
+  reviews ingested from multiple Korean sources, duplicate candidates detected with cheap
+  language-agnostic math, ambiguous cases resolved by an LLM judge — and every duplicate
+  <b>flagged, never deleted</b>, because the duplication pattern is itself a trust signal.</p>
+  <div class="notice"><b>Fixture data.</b> All 20 reviews, clinics, doctors and handles below are
+  fictional, modeled on real Korean source formats (Naver cafes, blogs, clinic testimonials).
+  No real clinic is named — you can't demo "suspected seeding" labels on real businesses.
+  Code &amp; pipeline: <a id="repolink" href="https://github.com/SHRony/gbg-review-dedup">github.com/SHRony/gbg-review-dedup</a></div>
+</header>
+
+<div class="stages">
+  <div class="stage"><h3><span class="n">1</span>Normalize + block</h3>
+    <p>Prices folded (35만원 ≡ ₩350,000), punctuation stripped. Candidates nominated by
+    <b>char-bigram similarity</b> (language-agnostic — no Korean tokenizer needed),
+    <b>metadata</b> (same procedure + price + date window), and <b>fuzzy author-handle</b> match.</p></div>
+  <div class="stage"><h3><span class="n">2</span>Cluster (cheap math)</h3>
+    <p>Union-find over pairs above the threshold you pick below. Near-exact copies auto-merge;
+    clearly distinct pairs auto-reject; nobody pays an LLM for the obvious cases.</p></div>
+  <div class="stage"><h3><span class="n">3</span>LLM judge (uncertain band only)</h3>
+    <p>Only ambiguous pairs — 4 of 190 here — get a structured verdict with rationale.
+    It also catches what n-grams structurally can't: the same review posted in Korean <i>and</i> English.</p></div>
+</div>
+
+<div class="controls">
+  <label>Stage-1 merge threshold <span class="thval" id="thval"></span></label>
+  <input type="range" id="th" min="0.10" max="1.00" step="0.01">
+  <label class="switch"><input type="checkbox" id="judgeOn" checked> Stage-2 LLM judge</label>
+  <div class="hint">The threshold is a <b>product policy</b>, not an implementation detail — it sets how
+  aggressively you accuse reviewers of being shills. Drag it low and watch genuine reviews get wrongly
+  merged; toggle the judge to see stage&nbsp;2 rescue them and catch the cross-language duplicate.</div>
+</div>
+
+<h2>Duplicate clusters</h2>
+<p class="h2sub" id="clusterSummary"></p>
+<div id="clusters"></div>
+
+<h2>Candidate pair inspector</h2>
+<p class="h2sub">Every nominated pair, with the blocking signals that nominated it and the judge's verdict where one was needed.</p>
+<div id="pairs"></div>
+
+<h2>All ingested reviews</h2>
+<p class="h2sub" id="reviewSummary"></p>
+<div class="grid" id="reviews"></div>
+
+<footer>
+  <h3>Honest limits (45-minute build)</h3>
+  Fixture corpus, not scraped data · O(n²) pairwise comparison (production: same shingles into MinHash/LSH) ·
+  clinic-name entity resolution is stubbed (structured <code>clinic</code> field assumed extracted upstream) ·
+  judge verdicts for this demo were generated by running <code>judge.py</code>'s exact prompt through Claude
+  interactively (no API key on the build machine; the script calls the API when <code>ANTHROPIC_API_KEY</code> is set).
+  <h3>v2</h3>
+  Real source connectors · MinHash/LSH blocking · clinic &amp; surgeon entity resolution ·
+  reviewer-graph seeding detection (burst timing, account age) · reader "report this review" signals feeding the same trust model.
+</footer>
+</div>
+
+<script src="data.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const byId = {}; DATA.reviews.forEach(r => byId[r.id] = r);
+const normHandle = h => h.toLowerCase().replace(/[\d_\-.*]+/g,"");
+const isPromoter = r => DATA.promoter_handles.includes(normHandle(r.author_handle));
+const verdictFor = p => DATA.verdicts.find(v => v.a===p.a && v.b===p.b);
+const srcChip = r => `<span class="badge b-src">${r.source_type}</span>`;
+const fmtPrice = p => p ? "₩"+p.toLocaleString() : "price n/a";
+
+function reviewHTML(r, canonical){
+  return `<div class="review">
+    ${canonical ? '<div class="canon">CANONICAL (earliest post) — shown to end users</div>' : ''}
+    <div class="meta">${srcChip(r)} <b>${r.id}</b> · ${r.source} · @${r.author_handle}
+      ${isPromoter(r) ? '<span class="badge b-promoter">promotional pattern: handle reviews 3+ clinics</span>' : ''}
+      · ${r.clinic} · ${r.procedure} · ${fmtPrice(r.price_krw)} · ${r.date} · ${r.lang.toUpperCase()}</div>
+    <div class="kr">${r.text}</div>
+    <div class="gloss">EN gloss: ${r.gloss_en}</div>
+  </div>`;
+}
+
+// Union-find
+function cluster(threshold, judgeOn){
+  const parent = {}; DATA.reviews.forEach(r => parent[r.id] = r.id);
+  const find = x => parent[x] === x ? x : (parent[x] = find(parent[x]));
+  const union = (a,b) => { parent[find(a)] = find(b); };
+  const pairState = {};   // pairKey -> merged | separate | vetoed | judge-merged
+  for (const p of DATA.pairs){
+    const v = judgeOn ? verdictFor(p) : null;
+    const key = p.a+"-"+p.b;
+    if (v && (v.relation === "paraphrase-seeding" || v.relation === "cross-language-duplicate" || v.relation === "cross-post")){
+      union(p.a, p.b); pairState[key] = "judge-merged";
+    } else if (v && (v.relation === "coincidental-similarity" || v.relation === "distinct")){
+      pairState[key] = p.jaccard >= threshold ? "vetoed" : "separate"; // judge overrides a bad merge
+    } else if (p.jaccard >= threshold){
+      union(p.a, p.b); pairState[key] = "merged";
+    } else pairState[key] = "separate";
+  }
+  const groups = {};
+  DATA.reviews.forEach(r => { const root = find(r.id); (groups[root] = groups[root] || []).push(r.id); });
+  return { clusters: Object.values(groups).filter(g => g.length > 1), pairState };
+}
+
+function clusterLabels(ids, pairState){
+  const labels = new Set();
+  for (const p of DATA.pairs){
+    if (!ids.includes(p.a) || !ids.includes(p.b)) continue;
+    const st = pairState[p.a+"-"+p.b];
+    if (st !== "merged" && st !== "judge-merged") continue;
+    const v = verdictFor(p);
+    if (v && v.relation === "cross-language-duplicate") labels.add("xlang");
+    else if (p.author_match) labels.add("crosspost");
+    else labels.add("seeding");
+  }
+  return labels;
+}
+
+const LABEL_HTML = {
+  crosspost: '<span class="badge b-crosspost">cross-post — same author, multiple boards (benign)</span>',
+  seeding:   '<span class="badge b-seeding">suspected seeding — same text skeleton, different identities</span>',
+  xlang:     '<span class="badge b-xlang">cross-language duplicate — KR/EN syndication</span>',
+};
+
+function render(){
+  const th = parseFloat($("th").value), judgeOn = $("judgeOn").checked;
+  $("thval").textContent = th.toFixed(2);
+  const { clusters, pairState } = cluster(th, judgeOn);
+
+  $("clusterSummary").textContent =
+    `${DATA.reviews.length} reviews → ${clusters.length} duplicate cluster(s) at threshold ${th.toFixed(2)}` +
+    (judgeOn ? " with LLM judge on" : " (stage 1 only)") +
+    `. ${DATA.reviews.length - clusters.reduce((s,c)=>s+c.length,0)} reviews are unique.`;
+
+  $("clusters").innerHTML = clusters.length ? clusters.map(ids => {
+    const rs = ids.map(id => byId[id]).sort((a,b) => a.date < b.date ? -1 : 1);
+    const labels = [...clusterLabels(ids, pairState)].map(l => LABEL_HTML[l]).join(" ");
+    return `<div class="cluster">
+      <div class="headline"><span class="badge b-places">posted in ${ids.length} places</span> ${labels}</div>
+      ${rs.map((r,i) => reviewHTML(r, i===0)).join("")}
+    </div>`;
+  }).join("") : '<div class="pair">No clusters at this threshold — every review treated as unique.</div>';
+
+  $("pairs").innerHTML = DATA.pairs.map(p => {
+    const st = pairState[p.a+"-"+p.b], v = judgeOn ? verdictFor(p) : null;
+    const stateHTML = {
+      "merged": '<span class="state s-merge">MERGED (stage-1 text similarity)</span>',
+      "judge-merged": '<span class="state s-merge">MERGED (LLM judge)</span>',
+      "vetoed": '<span class="state s-veto">MERGE VETOED — judge kept these separate</span>',
+      "separate": '<span class="state s-sep">kept separate</span>',
+    }[st];
+    return `<div class="pair">
+      <div class="row"><b>${p.a} ↔ ${p.b}</b>
+        <span class="bar"><i style="width:${Math.round(p.jaccard*100)}%"></i></span>
+        <span>bigram Jaccard ${p.jaccard.toFixed(3)}</span>
+        ${p.author_match ? '<span class="badge b-crosspost">author-handle match</span>' : ''}
+        ${p.metadata_match ? '<span class="badge b-xlang">metadata match (procedure+price+date)</span>' : ''}
+        ${p.needs_judge ? '<span class="badge b-judge">→ LLM judge</span>' : ''}
+        ${stateHTML}
+      </div>
+      ${v ? `<div class="verdict"><b>Judge verdict:</b> ${v.relation} · confidence ${v.confidence}
+        <div class="r">${v.rationale}</div>
+        <details><summary>provenance</summary>${v.generated_via}</details></div>` : ''}
+    </div>`;
+  }).join("");
+
+  $("reviewSummary").textContent =
+    `The raw corpus: 3 fixture source types (cafe, blog, clinic site, forum), Korean and English.`;
+  $("reviews").innerHTML = DATA.reviews.map(r => `<div class="mini">
+    <div class="meta" style="font-size:12px;color:var(--muted)">${srcChip(r)} <b>${r.id}</b> @${r.author_handle}
+      ${isPromoter(r) ? '<span class="badge b-promoter">promo pattern</span>' : ''}<br>
+      ${r.clinic} · ${r.procedure} · ${fmtPrice(r.price_krw)} · ${r.date}</div>
+    <div class="kr">${r.text}</div>
+  </div>`).join("");
+}
+
+$("th").value = DATA.default_threshold;
+$("th").addEventListener("input", render);
+$("judgeOn").addEventListener("change", render);
+render();
+</script>
+</body>
+</html>
