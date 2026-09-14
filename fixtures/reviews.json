@@ -25,7 +25,7 @@
     "lang": "ko",
     "photos": true,
     "text": "어제 미소라인의원에서 쌍수 절개로 했어요. 김원장님이 상담부터 수술까지 직접 해주셔서 안심됐고, 붓기는 3일차부터 빠지기 시작했어요. 총 비용 180만원. 실밥은 5일차에 풀었고 지금 2주차인데 라인 너무 자연스러워요. 후기 사진은 카페 등급 올리고 올릴게요!",
-    "gloss_en": "Identical text to r01, posted to a second cafe under a handle variant of the same author."
+    "gloss_en": "Incisional double eyelid at Misoline Clinic; Dr. Kim handled consult and surgery personally. Swelling from day 3, stitches out day 5, natural line at 2 weeks. ₩1.8M. (Identical text to r01, posted to a second cafe.)"
   },
   {
     "id": "r03",
@@ -53,7 +53,7 @@
     "lang": "ko",
     "photos": false,
     "text": "벨라성형외과에서 코성형 받은지 이제 한달 됐는데 진짜 인생이 달라졌어요ㅎㅎ 박원장님 손길이 정말 섬세하시고 상담때부터 강요 없이 편하게 해주셨습니다. 비용은 330만원인데 전혀 아깝지 않아요. 붓기도 생각보다 빨리 빠지고 주변에서 다들 자연스럽다고 하네요. 고민하시는 분들 꼭 상담이라도 받아보세요!",
-    "gloss_en": "Same skeleton as r03 with endings and numbers tweaked (₩3.3M), different author. The classic paid-seeding pattern."
+    "gloss_en": "Rhinoplasty at Bella PS a month ago — 'life-changing'. Dr. Park delicate, no pressure at the consult. ₩3.3M, worth every won. Fast swelling recovery, everyone says it looks natural. 'At least get a consult!'"
   },
   {
     "id": "r05",
@@ -81,7 +81,7 @@
     "lang": "ko",
     "photos": false,
     "text": "더퓨어의원 쌍꺼풀 후기 남겨요. 저는 절개로 했는데 붓기가 좀 오래 갔지만 지금은 라인 자연스러워요. 상담도 친절했고 비용 200만원 들었어요. 전체적으로 만족해요!",
-    "gloss_en": "Genuinely different patient at the same clinic using common review phrases (incisional method, longer swelling, ₩2M). Must NOT be merged with r05 at a sane threshold."
+    "gloss_en": "Incisional double eyelid at ThePure Clinic; swelling took a while but the line looks natural now. Friendly consult, ₩2M. Overall satisfied."
   },
   {
     "id": "r07",
@@ -109,7 +109,7 @@
     "lang": "en",
     "photos": true,
     "text": "I got 3-type facial contouring at Grace Clinic. I was scared at first, but Dr. Choi explained everything in detail while looking at my CT scan, so I trusted him. It was 5,500,000 KRW including the swelling care program. After a month I can really see the V-line. Super satisfied!",
-    "gloss_en": "English translation of r07 posted to a Western-facing forum by a different account. Character n-grams score this ~0 against r07 — only metadata blocking can nominate it."
+    "gloss_en": "3-type facial contouring at Grace Clinic; Dr. Choi explained everything over my CT scan. ₩5.5M including the swelling-care program. Clear V-line after a month. (Original posted in English.)"
   },
   {
     "id": "r09",
@@ -151,7 +151,7 @@
     "lang": "ko",
     "photos": false,
     "text": "라라성형외과에서 코성형 했어요! 자연스럽고 너무 예뻐요. 여기 진짜 유명한 이유가 있네요. 고민하지 말고 여기로 가세요!",
-    "gloss_en": "Third glowing review from the same handle at a third clinic in three weeks — the serial-promoter pattern."
+    "gloss_en": "Rhinoplasty at Lala PS — 'natural and so pretty, there's a reason it's famous. Don't hesitate, just go here!'"
   },
   {
     "id": "r12",
@@ -193,7 +193,7 @@
     "lang": "ko",
     "photos": false,
     "text": "실리프팅 시술 받고 10년은 젊어진 것 같아요. 미소라인의원 최고의 선택이었습니다. 감사합니다 원장님!",
-    "gloss_en": "Curated testimonial from the clinic's own site (masked name, no price) — structurally low-trust source type."
+    "gloss_en": "'Thread lifting took 10 years off — Misoline was the best choice. Thank you, doctor!' (Testimonial from the clinic's own site; masked name, no price.)"
   },
   {
     "id": "r15",
@@ -235,7 +235,7 @@
     "lang": "en",
     "photos": true,
     "text": "Flew from Sydney for double eyelid surgery at Misoline. The English coordinator was helpful but the price I was quoted (2.2M KRW) was higher than what Korean reviews mention for the same procedure. Result is good at 3 weeks. Wish I'd known the local price before my consult.",
-    "gloss_en": "Foreigner review flagging the foreigner-markup problem — quoted above local prices. Exactly the information gap the product exists to close."
+    "gloss_en": "Flew from Sydney for double eyelid at Misoline. English coordinator helpful, but the ₩2.2M quote was above what Korean reviews cite for the same procedure. Good result at 3 weeks. (Original posted in English.)"
   },
   {
     "id": "r18",

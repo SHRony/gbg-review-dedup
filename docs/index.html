@@ -53,6 +53,10 @@
   .review{border-top:1px dashed var(--line);padding:10px 0 4px;margin-top:8px}
   .review .meta{font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
   .review .kr{margin:6px 0 2px;white-space:pre-wrap}
+  .en{margin:6px 0 2px}
+  details.orig{margin:2px 0 4px}
+  details.orig summary{cursor:pointer;color:var(--muted);font-size:12px}
+  details.orig .kr{font-size:13.5px;color:var(--muted)}
   .review .gloss{font-size:13px;color:var(--muted);font-style:italic}
   .canon{font-size:11.5px;color:var(--green);font-weight:700;letter-spacing:.02em}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
@@ -152,8 +156,9 @@ function reviewHTML(r, canonical){
     <div class="meta">${srcChip(r)} <b>${r.id}</b> · ${r.source} · @${r.author_handle}
       ${isPromoter(r) ? '<span class="badge b-promoter">promotional pattern: handle reviews 3+ clinics</span>' : ''}
       · ${r.clinic} · ${r.procedure} · ${fmtPrice(r.price_krw)} · ${r.date} · ${r.lang.toUpperCase()}</div>
-    <div class="kr">${r.text}</div>
-    <div class="gloss">EN gloss: ${r.gloss_en}</div>
+    <div class="en">${r.gloss_en}</div>
+    <details class="orig"><summary>Original (${r.lang.toUpperCase()}) — the text the pipeline actually compares</summary>
+      <div class="kr">${r.text}</div></details>
   </div>`;
 }
 
@@ -259,7 +264,9 @@ function render(){
     <div class="meta" style="font-size:12px;color:var(--muted)">${srcChip(r)} <b>${r.id}</b> @${r.author_handle}
       ${isPromoter(r) ? '<span class="badge b-promoter">promo pattern</span>' : ''}<br>
       ${r.clinic} · ${r.procedure} · ${fmtPrice(r.price_krw)} · ${r.date}</div>
-    <div class="kr">${r.text}</div>
+    <div class="en" style="font-size:13px">${r.gloss_en}</div>
+    <details class="orig"><summary>Original (${r.lang.toUpperCase()})</summary>
+      <div class="kr">${r.text}</div></details>
   </div>`).join("");
 }
 
